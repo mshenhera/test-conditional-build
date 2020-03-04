@@ -58,8 +58,7 @@ pipeline {
                                     excludedRegions: '',
                                     includedRegions: "${pathInclude}"
                                 ],
-                                [$class: 'UserExclusion', excludedUsers: '''mshenhera
-GitHub'''
+                                [$class: 'UserExclusion', excludedUsers: '''mshenhera'''
                                 ]
                             ],
                             submoduleCfg: [],
