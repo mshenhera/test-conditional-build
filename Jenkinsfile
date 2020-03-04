@@ -1,7 +1,5 @@
 #!/usr/bin/env groovy
 
-@Library('jenkins-shared-library') _
-
 def buildDockerImage     = "ubuntu:18.04"
 
 def repoName = 'git@github.com:mshenhera/test-conditional-build.git'
