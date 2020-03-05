@@ -46,24 +46,26 @@ pipeline {
                           }
                         }
 
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: [[name: env.BRANCH_NAME]],
-                            doGenerateSubmoduleConfigurations: false,
-                            extensions: [
-                                [$class: 'LocalBranch'],
-                                [$class: 'CleanBeforeCheckout'],
-                                [
-                                    $class: 'PathRestriction',
-                                    excludedRegions: '',
-                                    includedRegions: "${pathInclude}"
+                        checkout(
+                            poll: false,
+                            scm: [
+                                $class: 'GitSCM',
+                                branches: [[name: env.BRANCH_NAME]],
+                                doGenerateSubmoduleConfigurations: false,
+                                extensions: [
+                                    [$class: 'LocalBranch'],
+                                    [$class: 'CleanBeforeCheckout'],
+                                    [
+                                        $class: 'PathRestriction',
+                                        excludedRegions: '',
+                                        includedRegions: "${pathInclude}"
+                                    ],
+                                    [$class: 'UserExclusion', excludedUsers: '''mshenhera''']
                                 ],
-                                [$class: 'UserExclusion', excludedUsers: '''mshenhera'''
+                                submoduleCfg: [],
+                                userRemoteConfigs: [[url: repoName, credentialsId: gitCredentialsId]]
                                 ]
-                            ],
-                            submoduleCfg: [],
-                            userRemoteConfigs: [[url: repoName, credentialsId: gitCredentialsId]]
-                        ])
+                        )
 
                         script {
                             if ( env.BUILD_NUMBER == "1" || params.reload_job ) {
